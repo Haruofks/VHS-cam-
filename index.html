@@ -50,6 +50,26 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px -a
 #prev{position:fixed;inset:0;background:rgba(0,0,0,.94);display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px;padding:16px;z-index:9}
 #prev img,#prev video{max-width:100%;max-height:70%;border-radius:12px}
 #hint{color:var(--mut);font-size:12px;text-align:center;min-height:16px}
+.cas{width:40px;height:68px;border-width:2px}.cas svg{width:100%;height:100%;display:block}
+#cas{padding:8px 16px 6px;gap:12px}
+#panel{width:calc(100% - 20px);background:#18181b;border-radius:28px;padding:8px;box-sizing:border-box}
+#top{display:flex;align-items:center;gap:10px;background:#0c0c0e;border-radius:20px;padding:8px 10px}
+#fbox{border:1.5px solid #e8a33d;border-radius:12px;padding:5px 8px;min-width:52px;text-align:center;color:#fff}
+#fbox b{display:block;font:700 12px 'Courier New',monospace}#fbox small{font-size:9px;color:#e8a33d}
+#tmp{flex:1;min-width:0}#tl{display:flex;justify-content:space-between;font:700 9px 'Courier New',monospace;margin-bottom:2px}#tl span:nth-child(2){color:#fff}
+#rl{height:6px;background:repeating-linear-gradient(90deg,rgba(255,255,255,.4) 0 1px,transparent 1px 7px)}
+#tr{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;margin:0}
+#tr::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:linear-gradient(90deg,#4aa8ff,#d9d9d9,#ff9a3c)}
+#tr::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;margin-top:-8px;box-shadow:0 0 0 3px rgba(0,0,0,.5)}
+#tr::-moz-range-track{height:6px;border-radius:3px;background:linear-gradient(90deg,#4aa8ff,#d9d9d9,#ff9a3c)}
+#tr::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#fff;border:0}
+#zoom{width:auto;height:40px;border-radius:12px;align-items:center;background:#1e1e22}#zoom button{flex:none;width:32px;height:40px}
+#zoom span{font:700 11px 'Courier New',monospace;color:#fff;min-width:32px;text-align:center}
+#bot{display:flex;align-items:center;justify-content:space-between;padding:12px 6px 4px}
+.lg{width:auto}.sq{width:48px;height:48px;border-radius:12px}.cb{width:44px;height:44px;border-radius:12px}
+#shutter{width:74px;height:74px;border:0;background:radial-gradient(circle at 50% 40%,#dcdcdc,#a9a9ab);box-shadow:0 0 0 6px #0c0c0e,0 0 0 8px #2a2a2e}
+#shutter i{display:none}#shutter.rec{background:radial-gradient(circle at 50% 40%,#ff7a5a,#e0431f)}
+#pill{margin:0;padding:4px 6px;gap:0;border-radius:24px;background:#0c0c0e}.pi{padding:8px}.pi svg{width:22px;height:22px}
 </style>
 </head>
 <body>
@@ -70,15 +90,21 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px -a
    <button class="btn" id="pClose">Fechar</button></div>
  </div>
  <div id="cas"></div>
- <div id="ctl">
-  <div class="lg"><button class="sq" id="gal" aria-label="Álbum"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="12" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v10M3 15l4-4 4 4 3-3 3 3"/></svg></button><button class="cb" id="acc" aria-label="Câmera e acesso"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button></div>
-  <button id="shutter" aria-label="Capturar"><i></i></button>
-  <div id="zoom"><button id="zm">−</button><button id="zp">+</button></div>
- </div>
- <div id="pill">
-  <button class="pi" id="mPhoto" aria-label="Foto"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
-  <button class="pi on" id="mVideo" aria-label="Vídeo"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="14" height="10" rx="2"/><path d="M16 11l6-3v10l-6-3M5 8V5h6l1 3"/></svg></button>
-  <button class="pi" id="mLib" aria-label="Última captura"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M10 9.5v6l5-3zM6 3h12"/></svg></button>
+ <div id="panel">
+  <div id="top">
+   <div id="fbox"><b id="fn">E240</b><small id="fm">VÍDEO</small></div>
+   <div id="tmp"><div id="tl"><span style="color:#6fb6ff">FRIO</span><span id="tv">NEUTRO</span><span style="color:#ffa24a">QUENTE</span></div><div id="rl"></div><input type="range" id="tr" min="-100" max="100" value="0" aria-label="Temperatura de cor"></div>
+   <div id="zoom"><button id="zm">−</button><span id="zv">1.0x</span><button id="zp">+</button></div>
+  </div>
+  <div id="bot">
+   <div class="lg"><button class="sq" id="gal" aria-label="Álbum"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="12" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v10M3 15l4-4 4 4 3-3 3 3"/></svg></button><button class="cb" id="acc" aria-label="Câmera e acesso"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button></div>
+   <button id="shutter" aria-label="Capturar"><i></i></button>
+   <div id="pill">
+    <button class="pi" id="mPhoto" aria-label="Foto"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+    <button class="pi on" id="mVideo" aria-label="Vídeo"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="14" height="10" rx="2"/><path d="M16 11l6-3v10l-6-3M5 8V5h6l1 3"/></svg></button>
+    <button class="pi" id="mLib" aria-label="Última captura"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M10 9.5v6l5-3zM6 3h12"/></svg></button>
+   </div>
+  </div>
  </div>
 </div>
 <div id="prev"><div id="pc"></div><div id="hint"></div><div><button class="btn" id="share">Compartilhar / salvar</button> <button class="btn" id="close">Fechar</button></div></div>
@@ -135,7 +161,7 @@ function msg(t){const m=$('#msg');m.style.display=t?'flex':'none';m.textContent=
 function toast(t){const e=$('#toast');e.textContent=t;e.style.opacity=1;clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.opacity=0,2200)}
 if(!g)msg('Este navegador não suporta WebGL, necessário para o efeito.');
 const VS='attribute vec2 a;varying vec2 uv;void main(){uv=a*.5+.5;gl_Position=vec4(a,0.,1.);}';
-const FS=`precision highp float;varying vec2 uv;uniform sampler2D tex,ov;uniform vec2 res,tp;uniform float time,mirror,zoom,ti,chroma,grain,gs,cnoise,scan,il,jit,wob,wfq,wsp,track,tbh,tbs,tsn,hsh,hsa,drop,ring,xcol,smear,bloom,flick,hot,vig,sat,con,lift,soft,mono,gTear,gSplit,gRoll,gRate,gseed;uniform vec3 tint,lc;
+const FS=`precision highp float;varying vec2 uv;uniform sampler2D tex,ov;uniform vec2 res,tp;uniform float time,mirror,zoom,ti,temp,chroma,grain,gs,cnoise,scan,il,jit,wob,wfq,wsp,track,tbh,tbs,tsn,hsh,hsa,drop,ring,xcol,smear,bloom,flick,hot,vig,sat,con,lift,soft,mono,gTear,gSplit,gRoll,gRate,gseed;uniform vec3 tint,lc;
 float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
 vec3 S(vec2 q){vec2 z=(q-.5)/zoom+.5;vec3 c=texture2D(tex,vec2(mirror>.5?1.-z.x:z.x,1.-z.y)).rgb;vec4 o=texture2D(ov,vec2(q.x,1.-q.y));return mix(c,o.rgb,o.a);}
 void main(){
@@ -168,14 +194,14 @@ void main(){
  if(mono>.5)c=vec3(Y);
  float hl=0.;for(int i=1;i<=5;i++){hl+=max(0.,dot(S(p+vec2(0.,float(i)*.008)),W)-.82);}c+=smear*hl*.5;
  vec3 bl=(S(p+vec2(6.*px,0.))+S(p-vec2(6.*px,0.))+S(p+vec2(0.,.006))+S(p-vec2(0.,.006)))*.25;c+=bloom*max(bl-.6,0.);
- c=(c-.5)*con+.5;c=c*(1.-lift)+lift*lc;c*=tint;
+ c=(c-.5)*con+.5;c=c*(1.-lift)+lift*lc;c*=tint;if(mono<.5)c*=vec3(1.+temp*.14,1.+temp*.02,1.-temp*.18);
  c*=1.+flick*(h(vec2(floor(time*5.),3.))-.5)*2.;
  vec2 q=uv-.5;float r2=dot(q,q)*2.;c*=max(1.+hot*(1.-smoothstep(0.,.8,r2*1.6))*.8-vig*r2,0.);
  vec2 gp=floor(uv*res/max(gs,1.5)),fo=vec2(ft*17.3,ft*9.1);float n=(h(gp+fo)+h(gp*1.37+fo+7.)-1.)*.55;
  c+=n*(grain+.05)*(1.3-Yc);c+=(vec3(h(gp+fo+1.),h(gp+fo+2.),h(gp+fo+3.))-.5)*cnoise*(mono>.5?0.:1.);
  c+=band*h(vec2(uv.x*50.,L+ft))*tsn;
  float dl=floor(time*9.);float dx0=h(vec2(L,dl+3.));
- c=mix(c,vec3(1.),step(1.-drop,h(vec2(L,dl)))*step(dx0,uv.x)*step(uv.x,dx0+.02+.12*h(vec2(L,dl+5.)))*.9);
+ c=mix(c,vec3(1.),step(1.-drop,h(vec2(L,dl)))*step(dx0,uv.x)*step(uv.x,dx0+.02+.12*h(vec2(L,dl+5.)))*.38);
  c+=tm*min(sm,1.)*(vec3(h(vec2(uv.x*300.,L+ft)),h(vec2(uv.x*300.+1.,L+ft)),h(vec2(uv.x*300.+2.,L+ft)))-.5)*.35;
  c*=1.-step(1.,p.y)-step(p.y,0.);
  gl_FragColor=vec4(clamp(c,0.,1.),1.);}`;
@@ -187,7 +213,7 @@ if(g){
  const a=g.getAttribLocation(pr,'a');g.enableVertexAttribArray(a);g.vertexAttribPointer(a,2,g.FLOAT,false,0,0);
  const tx=g.createTexture();g.bindTexture(g.TEXTURE_2D,tx);
  [[g.TEXTURE_WRAP_S,g.CLAMP_TO_EDGE],[g.TEXTURE_WRAP_T,g.CLAMP_TO_EDGE],[g.TEXTURE_MIN_FILTER,g.LINEAR],[g.TEXTURE_MAG_FILTER,g.LINEAR]].forEach(([k,v])=>g.texParameteri(g.TEXTURE_2D,k,v));
- [...KS,'tex','ov','res','tp','time','mirror','zoom','ti','tint','lc'].forEach(k=>U[k]=g.getUniformLocation(pr,k));
+ [...KS,'tex','ov','res','tp','time','mirror','zoom','ti','temp','tint','lc'].forEach(k=>U[k]=g.getUniformLocation(pr,k));
  g.uniform1i(U.tex,0);g.uniform1i(U.ov,1);
  tx2=g.createTexture();g.activeTexture(g.TEXTURE1);g.bindTexture(g.TEXTURE_2D,tx2);
  [[g.TEXTURE_WRAP_S,g.CLAMP_TO_EDGE],[g.TEXTURE_WRAP_T,g.CLAMP_TO_EDGE],[g.TEXTURE_MIN_FILTER,g.LINEAR],[g.TEXTURE_MAG_FILTER,g.LINEAR]].forEach(([k,v])=>g.texParameteri(g.TEXTURE_2D,k,v));
@@ -206,7 +232,7 @@ function frame(t){
  drawStamp(w,h,ow,oh);
  g.texImage2D(g.TEXTURE_2D,0,g.RGBA,g.RGBA,g.UNSIGNED_BYTE,src);
  const p=cur;g.uniform2f(U.res,w,h);g.uniform1f(U.time,t/1000);g.uniform1f(U.mirror,mirror);g.uniform1f(U.zoom,zoom);
- KS.forEach(k=>g.uniform1f(U[k],p[k]));g.uniform3f(U.tint,...p.tint);g.uniform3f(U.lc,...p.lc);g.uniform2f(U.tp,tpx,tpy);g.uniform1f(U.ti,ti);FR=[w,h,ow,oh];g.drawArrays(g.TRIANGLE_STRIP,0,4);
+ KS.forEach(k=>g.uniform1f(U[k],p[k]));g.uniform3f(U.tint,...p.tint);g.uniform3f(U.lc,...p.lc);g.uniform2f(U.tp,tpx,tpy);g.uniform1f(U.ti,ti);g.uniform1f(U.temp,temp);FR=[w,h,ow,oh];g.drawArrays(g.TRIANGLE_STRIP,0,4);
  ctx.drawImage(gc,(w-ow)/2,(h-oh)/2,ow,oh,0,0,ow,oh);
  drawRecUI(t);
 }
@@ -223,9 +249,9 @@ async function startCam(){
 }
 function buildCas(){const c=$('#cas');PRESETS.forEach(p=>{const b=document.createElement('button');b.className='cas'+(p===cur?' on':'');b.style.background='#000';b.style.padding='0';
  b.innerHTML=COVER[p.n];
- b.onclick=()=>{cur=p;[...c.children].forEach(y=>y.classList.toggle('on',y===b))};c.appendChild(b)})}
+ b.onclick=()=>{cur=p;$('#fn').textContent=p.n;[...c.children].forEach(y=>y.classList.toggle('on',y===b))};c.appendChild(b)})}
 buildCas();$('.cas.on').scrollIntoView({inline:'center',block:'nearest'});
-function setMode(m){mode=m;$('#mPhoto').classList.toggle('on',m==='photo');$('#mVideo').classList.toggle('on',m==='video')}
+function setMode(m){mode=m;$('#fm').textContent=m==='video'?'VÍDEO':'FOTO';$('#mPhoto').classList.toggle('on',m==='photo');$('#mVideo').classList.toggle('on',m==='video')}
 $('#mPhoto').onclick=()=>{if(!rec)setMode('photo')};$('#mVideo').onclick=()=>{if(!rec)setMode('video')};
 $('#mLib').onclick=()=>{if(prevBlob)showPrev(prevBlob.b,prevBlob.kind);else toast('Nada capturado ainda')};
 $('#bFlip').onclick=()=>{facing=facing==='user'?'environment':'user';startCam()};
@@ -257,10 +283,10 @@ function drawRecUI(t){
  if(Math.floor(t/500)%2===0){rx.fillStyle='#ff2b2b';rx.beginPath();rx.arc(16,30,13,0,7);rx.fill()}
  rx.fillStyle='#ff2b2b';pix(rx,'REC',42,9,6);rx.fillStyle='#fff';pix(rx,str,170,9,6);
 }
-let zdir=0,zhold=0,lastT=0,zshow=0;const ZMAX=6,zb=$('#zbar'),zbb=zb.querySelector('b');
+const zvEl=$('#zv');let zdir=0,zhold=0,lastT=0,zshow=0;const ZMAX=6,zb=$('#zbar'),zbb=zb.querySelector('b');
 function zoomStep(t){
  const dt=Math.min(.1,Math.max(0,(t-lastT)/1000));lastT=t;ti+=((tdown?1:0)-ti)*Math.min(1,dt*(tdown?14:4));
- if(zdir){zhold+=dt;const sp=.35+Math.min(zhold,2)*.35;zoom=Math.min(ZMAX,Math.max(1,zoom*Math.exp(zdir*sp*dt)));zshow=t+1200}
+ if(zdir){zhold+=dt;const sp=.35+Math.min(zhold,2)*.35;zoom=Math.min(ZMAX,Math.max(1,zoom*Math.exp(zdir*sp*dt)));zshow=t+1200;zvEl.textContent=zoom.toFixed(1)+'x'}
  const on=t<zshow;zb.style.display=on?'flex':'none';if(on)zbb.style.width=(Math.log(zoom)/Math.log(ZMAX)*100)+'%';
 }
 function zbind(id,d){const b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();zdir=d;zhold=0;try{b.setPointerCapture(e.pointerId)}catch(_){}});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>b.addEventListener(ev,()=>{zdir=0}))}
@@ -302,12 +328,15 @@ $('#share').onclick=async()=>{
  const f=new File([prevBlob.b],'vhs-'+Date.now()+'.'+ext,{type:prevBlob.b.type});
  try{if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f]});else $('#hint').textContent='Seu navegador não abriu o compartilhamento. Segure o dedo sobre a imagem/vídeo para salvar.'}catch(e){}
 };
-let tpx=.5,tpy=.5,ti=0,tdown=false,FR=[1,1,1,1];
+let temp=0,tpx=.5,tpy=.5,ti=0,tdown=false,FR=[1,1,1,1];
 function tset(e){const r=out.getBoundingClientRect(),[w,h,ow,oh]=FR,x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;tpx=((w-ow)/2+x*ow)/w;tpy=1-((h-oh)/2+y*oh)/h}
 out.addEventListener('pointerdown',e=>{e.preventDefault();tdown=true;tset(e);try{out.setPointerCapture(e.pointerId)}catch(_){}});
 out.addEventListener('pointermove',e=>{if(tdown)tset(e)});
 ['pointerup','pointercancel'].forEach(v=>out.addEventListener(v,()=>{tdown=false}));
 setTimeout(()=>toast('Toque e segure na imagem: glitch'),1500);
+const tr=$('#tr'),tv=$('#tv');
+function setT(){const v=+tr.value;temp=v/100;tv.textContent=v===0?'NEUTRO':(v>0?'QUENTE +':'FRIO ')+v}
+tr.addEventListener('input',setT);tv.onclick=()=>{tr.value=0;setT()};
 startCam();
 </script>
 </body>
