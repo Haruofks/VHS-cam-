@@ -70,6 +70,36 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px -a
 #shutter{width:74px;height:74px;border:0;background:radial-gradient(circle at 50% 40%,#dcdcdc,#a9a9ab);box-shadow:0 0 0 6px #0c0c0e,0 0 0 8px #2a2a2e}
 #shutter i{display:none}#shutter.rec{background:radial-gradient(circle at 50% 40%,#ff7a5a,#e0431f)}
 #pill{margin:0;padding:4px 6px;gap:0;border-radius:24px;background:#0c0c0e}.pi{padding:8px}.pi svg{width:22px;height:22px}
+#vf{width:calc(100% - 12px);border-width:3px;border-radius:26px}
+#cas{padding:6px 14px 4px}
+#adj{display:flex;align-items:center;gap:12px;width:calc(100% - 20px);padding:2px 4px;box-sizing:border-box}
+#tmp{flex:1;min-width:0}
+#zoom{display:flex;align-items:center;gap:6px;background:#0c0c0e;border-radius:16px;padding:6px 8px;height:auto;width:auto;overflow:visible;box-shadow:inset 0 2px 6px rgba(0,0,0,.8),0 0 0 1px #26262a}
+#zoom .wt{flex:none;width:44px;height:36px;border:0;border-radius:10px;color:#e8e8ea;font:800 15px 'Courier New',monospace;background:linear-gradient(#34343a,#1b1b1e);box-shadow:0 4px 0 #050506,0 7px 9px rgba(0,0,0,.65),inset 0 1px 0 rgba(255,255,255,.14),inset 0 -2px 3px rgba(0,0,0,.5);transition:transform .14s,box-shadow .14s,color .14s;touch-action:none;-webkit-user-select:none;user-select:none;margin:0 0 4px}
+#zoom #zm.down{transform:translateY(3px) rotate(-1.5deg);color:var(--acc);box-shadow:0 1px 0 #050506,-2px 3px 4px rgba(0,0,0,.5),inset 3px 3px 6px rgba(0,0,0,.75),inset -1px -1px 2px rgba(255,255,255,.06)}
+#zoom #zp.down{transform:translateY(3px) rotate(1.5deg);color:var(--acc);box-shadow:0 1px 0 #050506,2px 3px 4px rgba(0,0,0,.5),inset -3px 3px 6px rgba(0,0,0,.75),inset 1px -1px 2px rgba(255,255,255,.06)}
+#zoom span{font:700 12px 'Courier New',monospace;color:#fff;min-width:38px;text-align:center}
+#bot{display:flex;align-items:center;justify-content:space-between;width:calc(100% - 20px);padding:8px 4px 6px;box-sizing:border-box}
+.lg{display:flex;gap:10px;align-items:center;width:auto}
+#shutter{width:74px;height:74px;border:0;border-radius:50%;background:radial-gradient(circle at 50% 40%,#dcdcdc,#a9a9ab);box-shadow:0 0 0 6px #0c0c0e,0 0 0 8px #2a2a2e}
+#shutter i{display:none}#shutter.rec{background:radial-gradient(circle at 50% 40%,#ff7a5a,#e0431f)}
+#mode{position:relative;display:flex;background:#0c0c0e;border-radius:30px;padding:4px;box-shadow:inset 0 2px 5px rgba(0,0,0,.8),0 0 0 1px #2a2a2e}
+#mode button{position:relative;z-index:1;width:56px;background:none;border:0;color:#cfcfd4;padding:8px 0;border-radius:24px;display:flex;flex-direction:column;align-items:center;gap:2px;font:700 9px 'Courier New',monospace;transition:color .25s}
+#mode button.on{color:#fff}
+#mode button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#mi{position:absolute;top:4px;bottom:4px;left:4px;width:56px;border-radius:24px;background:linear-gradient(#ff6a45,#e0431f);box-shadow:0 2px 6px rgba(224,67,31,.4);transition:transform .25s cubic-bezier(.4,0,.2,1)}
+#mode.v #mi{transform:translateX(56px)}
+#sett{position:absolute;inset:0;display:none;flex-direction:column;gap:14px;justify-content:center;padding:20px;background:rgba(0,0,0,.93);z-index:6;overflow:auto}
+.opt{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.seg{display:flex;background:#0c0c0e;border-radius:12px;padding:3px}
+.seg button{background:none;border:0;color:#9a9aa3;padding:8px 12px;border-radius:10px;font-size:13px}.seg .on{background:#2a2a2e;color:var(--acc)}
+#cas .cas:first-child{margin-left:auto}#cas .cas:last-child{margin-right:auto}
+#shutter{position:relative;touch-action:manipulation;-webkit-user-select:none;user-select:none;transition:transform .16s ease-out,box-shadow .16s ease-out;box-shadow:0 0 0 6px #0c0c0e,0 0 0 8px #2a2a2e,0 7px 10px 6px rgba(0,0,0,.55),inset 0 2px 2px rgba(255,255,255,.55),inset 0 -5px 8px rgba(0,0,0,.3)}
+#shutter.down{transform:translateY(3px) scale(.975);transition:transform .07s ease-in,box-shadow .07s ease-in;box-shadow:0 0 0 6px #0c0c0e,0 0 0 8px #2a2a2e,0 2px 3px 4px rgba(0,0,0,.5),inset 0 5px 12px rgba(0,0,0,.6),inset 0 -1px 2px rgba(255,255,255,.25)}
+#shutter.rec i{display:block;width:24px;height:24px;border-radius:6px;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.4)}
+#shutter::after{content:'';position:absolute;inset:-14px;border-radius:50%;border:2px solid rgba(255,90,54,0);pointer-events:none}
+#shutter.rec::after{animation:rp 1.2s ease-in-out infinite}
+@keyframes rp{50%{border-color:rgba(255,90,54,.9)}}
 </style>
 </head>
 <body>
@@ -80,6 +110,14 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px -a
   <button class="round" id="bAr">9:16</button>
   <button class="round" id="bFlip" aria-label="Virar"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14-4M4 4v4h4M4 13a8 8 0 0 0 14 4m2 3v-4h-4"/></svg></button>
   <canvas id="recui" width="460" height="60" style="position:absolute;top:20px;left:50%;transform:translateX(-50%);width:230px;height:30px;display:none;z-index:2;pointer-events:none;filter:drop-shadow(0 0 3px #000)"></canvas><div id="zbar"><span>W</span><i><b></b></i><span>T</span></div><div id="toast"></div><div id="ban">Prévia de demonstração: a câmera está bloqueada neste ambiente. Toque aqui para ver as opções.</div>
+  <div id="sett"><b>Configurações</b>
+   <div class="opt"><span>Resolução</span><div class="seg" data-k="res"><button data-v="1280" class="on">720p</button><button data-v="1920">1080p</button><button data-v="3840">4K</button></div></div>
+   <div class="opt"><span>Qualidade</span><div class="seg" data-k="q"><button data-v="n">Normal</button><button data-v="h" class="on">Alta</button></div></div>
+   <div class="opt"><span>Data e hora</span><div class="seg" data-k="osd"><button data-v="1" class="on">Ligada</button><button data-v="0">Desligada</button></div></div>
+   <div class="opt"><span>Salvar no Fotos</span><div class="seg" data-k="auto"><button data-v="1" class="on">Automático</button><button data-v="0">Manual</button></div></div>
+   <button class="btn" id="sPerm">Acesso à câmera e microfone</button>
+   <div id="why">Resolução e qualidade valem para a próxima foto ou gravação. A câmera é reiniciada ao trocar a resolução. 4K (3840 × 2160) só é aplicado se o iPhone e o navegador entregarem 4K de verdade; se não, o app avisa e usa a melhor resolução disponível. Em 4K o efeito pode ficar mais lento.</div>
+   <button class="btn" id="sClose">Fechar</button></div>
   <div id="perm"><b>Acesso à câmera, microfone e álbum</b>
    <div class="pr"><span>Câmera</span><span id="scam">—</span><button class="btn" id="pCam">Permitir</button></div>
    <div class="pr"><span>Microfone</span><span id="smic">—</span><button class="btn" id="pMic">Permitir</button></div>
@@ -90,24 +128,20 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px -a
    <button class="btn" id="pClose">Fechar</button></div>
  </div>
  <div id="cas"></div>
- <div id="panel">
-  <div id="top">
-   <div id="fbox"><b id="fn">E240</b><small id="fm">VÍDEO</small></div>
-   <div id="tmp"><div id="tl"><span style="color:#6fb6ff">FRIO</span><span id="tv">NEUTRO</span><span style="color:#ffa24a">QUENTE</span></div><div id="rl"></div><input type="range" id="tr" min="-100" max="100" value="0" aria-label="Temperatura de cor"></div>
-   <div id="zoom"><button id="zm">−</button><span id="zv">1.0x</span><button id="zp">+</button></div>
-  </div>
-  <div id="bot">
-   <div class="lg"><button class="sq" id="gal" aria-label="Álbum"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="12" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v10M3 15l4-4 4 4 3-3 3 3"/></svg></button><button class="cb" id="acc" aria-label="Câmera e acesso"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button></div>
-   <button id="shutter" aria-label="Capturar"><i></i></button>
-   <div id="pill">
-    <button class="pi" id="mPhoto" aria-label="Foto"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
-    <button class="pi on" id="mVideo" aria-label="Vídeo"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="14" height="10" rx="2"/><path d="M16 11l6-3v10l-6-3M5 8V5h6l1 3"/></svg></button>
-    <button class="pi" id="mLib" aria-label="Última captura"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="15" rx="2"/><path d="M10 9.5v6l5-3zM6 3h12"/></svg></button>
-   </div>
+ <div id="adj">
+  <div id="tmp"><div id="tl"><span style="color:#6fb6ff">FRIO</span><span id="tv">NEUTRO</span><span style="color:#ffa24a">QUENTE</span></div><div id="rl"></div><input type="range" id="tr" min="-100" max="100" value="0" aria-label="Temperatura de cor"></div>
+  <div id="zoom"><button class="wt" id="zm" aria-label="Wide: diminuir zoom">W</button><span id="zv">1.0x</span><button class="wt" id="zp" aria-label="Tele: aumentar zoom">T</button></div>
+ </div>
+ <div id="bot">
+  <div class="lg"><button class="sq" id="gal" aria-label="Álbum"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="12" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v10M3 15l4-4 4 4 3-3 3 3"/></svg></button><button class="cb" id="acc" aria-label="Configurações"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg></button></div>
+  <button id="shutter" aria-label="Capturar"><i></i></button>
+  <div id="mode" class="v"><b id="mi"></b>
+   <button id="mPhoto" aria-label="Foto"><svg viewBox="0 0 24 24"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>FOTO</button>
+   <button id="mVideo" class="on" aria-label="Vídeo"><svg viewBox="0 0 24 24"><rect x="2" y="8" width="14" height="10" rx="2"/><path d="M16 11l6-3v10l-6-3M5 8V5h6l1 3"/></svg>VÍDEO</button>
   </div>
  </div>
 </div>
-<div id="prev"><div id="pc"></div><div id="hint"></div><div><button class="btn" id="share">Compartilhar / salvar</button> <button class="btn" id="close">Fechar</button></div></div>
+<div id="prev"><div id="pc"></div><div id="hint"></div><div><button class="btn" id="share">Salvar no Fotos</button> <button class="btn" id="close">Fechar</button></div></div>
 <input type="file" id="file" accept="image/*,video/*" hidden>
 <input type="file" id="fileC" accept="image/*" capture="environment" hidden>
 <input type="file" id="fileV" accept="video/*" capture="environment" hidden>
@@ -225,7 +259,7 @@ function frame(t){
  zoomStep(t);
  if(src===demo)drawDemo(t);
  const d=g&&dims();if(!d)return;
- const k=Math.min(1,1280/Math.max(d[0],d[1])),w=Math.round(d[0]*k),h=Math.round(d[1]*k),r=ARS[ai][1];
+ const k=Math.min(1,maxDim/Math.max(d[0],d[1])),w=Math.round(d[0]*k),h=Math.round(d[1]*k),r=ARS[ai][1];
  let ow,oh;if(r<w/h){oh=h;ow=Math.round(h*r)}else{ow=w;oh=Math.round(w/r)}
  const key=w+'x'+h+'x'+ai;
  if(key!==sizeKey){sizeKey=key;gc.width=w;gc.height=h;out.width=ow;out.height=oh;g.viewport(0,0,w,h)}
@@ -242,18 +276,18 @@ function ban(on){$('#ban').style.display=on?'block':'none'}$('#ban').onclick=()=
 async function startCam(){
  if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){ban(true);return}
  if(stream)stream.getTracks().forEach(t=>t.stop());
- const v={facingMode:facing,width:{ideal:1280},height:{ideal:720}};
+ const v={facingMode:facing,width:{ideal:maxDim},height:{ideal:Math.round(maxDim*.5625)}};
  try{stream=await navigator.mediaDevices.getUserMedia({video:v,audio:true})}
  catch(e){try{stream=await navigator.mediaDevices.getUserMedia({video:v})}catch(e2){ban(true);return}}
- ban(false);msg('');showPerm(false);fileVid=false;vid.loop=false;vid.srcObject=stream;try{await vid.play()}catch(e){}src=vid;mirror=facing==='user'?1:0;sizeKey='';
+ ban(false);msg('');showPerm(false);fileVid=false;vid.loop=false;vid.srcObject=stream;try{await vid.play()}catch(e){}src=vid;checkRes();mirror=facing==='user'?1:0;sizeKey='';
 }
 function buildCas(){const c=$('#cas');PRESETS.forEach(p=>{const b=document.createElement('button');b.className='cas'+(p===cur?' on':'');b.style.background='#000';b.style.padding='0';
  b.innerHTML=COVER[p.n];
- b.onclick=()=>{cur=p;$('#fn').textContent=p.n;[...c.children].forEach(y=>y.classList.toggle('on',y===b))};c.appendChild(b)})}
-buildCas();$('.cas.on').scrollIntoView({inline:'center',block:'nearest'});
-function setMode(m){mode=m;$('#fm').textContent=m==='video'?'VÍDEO':'FOTO';$('#mPhoto').classList.toggle('on',m==='photo');$('#mVideo').classList.toggle('on',m==='video')}
-$('#mPhoto').onclick=()=>{if(!rec)setMode('photo')};$('#mVideo').onclick=()=>{if(!rec)setMode('video')};
-$('#mLib').onclick=()=>{if(prevBlob)showPrev(prevBlob.b,prevBlob.kind);else toast('Nada capturado ainda')};
+ b.onclick=()=>{cur=p;[...c.children].forEach(y=>y.classList.toggle('on',y===b))};c.appendChild(b)})}
+buildCas();const ctr=()=>{const c=$('#cas');c.scrollLeft=(c.scrollWidth-c.clientWidth)/2};ctr();requestAnimationFrame(ctr);setTimeout(ctr,300);addEventListener('resize',ctr);
+function setMode(m){mode=m;$('#mode').classList.toggle('v',m==='video');$('#mPhoto').classList.toggle('on',m==='photo');$('#mVideo').classList.toggle('on',m==='video')}
+$('#mPhoto').onclick=()=>{if(rec)toast('Pare a gravação antes de trocar de modo');else setMode('photo')};$('#mVideo').onclick=()=>{if(rec)toast('Pare a gravação antes de trocar de modo');else setMode('video')};
+
 $('#bFlip').onclick=()=>{facing=facing==='user'?'environment':'user';startCam()};
 $('#bAr').onclick=e=>{ai=(ai+1)%ARS.length;e.currentTarget.textContent=ARS[ai][0]};
 $('#bFlash').onclick=()=>{const tr=stream&&stream.getVideoTracks()[0];if(!(tr&&tr.getCapabilities&&tr.getCapabilities().torch)){toast('Flash indisponível neste navegador');return}fl=!fl;tr.applyConstraints({advanced:[{torch:fl}]}).catch(()=>{});toast(fl?'Flash ligado':'Flash desligado')};
@@ -289,21 +323,21 @@ function zoomStep(t){
  if(zdir){zhold+=dt;const sp=.35+Math.min(zhold,2)*.35;zoom=Math.min(ZMAX,Math.max(1,zoom*Math.exp(zdir*sp*dt)));zshow=t+1200;zvEl.textContent=zoom.toFixed(1)+'x'}
  const on=t<zshow;zb.style.display=on?'flex':'none';if(on)zbb.style.width=(Math.log(zoom)/Math.log(ZMAX)*100)+'%';
 }
-function zbind(id,d){const b=$(id);b.addEventListener('pointerdown',e=>{e.preventDefault();zdir=d;zhold=0;try{b.setPointerCapture(e.pointerId)}catch(_){}});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>b.addEventListener(ev,()=>{zdir=0}))}
+function zbind(id,d){const b=$(id);b.addEventListener('contextmenu',e=>e.preventDefault());b.addEventListener('pointerdown',e=>{e.preventDefault();zdir=d;zhold=0;b.classList.add('down');zoom=Math.min(ZMAX,Math.max(1,zoom*Math.exp(d*.05)));zshow=performance.now()+1200;zvEl.textContent=zoom.toFixed(1)+'x';try{b.setPointerCapture(e.pointerId)}catch(_){}});['pointerup','pointercancel','lostpointercapture'].forEach(ev=>b.addEventListener(ev,()=>{zdir=0;b.classList.remove('down')}))}
 zbind('#zp',1);zbind('#zm',-1);
 function loadFile(f){if(!f)return;showPerm(false);msg('');const u=URL.createObjectURL(f);
  if(f.type.startsWith('video')){fileVid=true;vid.srcObject=null;vid.src=u;vid.muted=true;vid.loop=true;vid.play().catch(()=>{});src=vid;mirror=0;sizeKey=''}
  else{fileVid=false;const i=new Image();i.onload=()=>{src=i;mirror=0;sizeKey=''};i.src=u}}
 ['#file','#fileC','#fileV'].forEach(s=>{$(s).onchange=e=>{loadFile(e.target.files[0]);e.target.value=''}});
 $('#gal').onclick=()=>$('#file').click();
-$('#acc').onclick=()=>showPerm(true);$('#pClose').onclick=()=>showPerm(false);
+$('#pClose').onclick=()=>showPerm(false);
 $('#pAlb').onclick=()=>$('#file').click();$('#nFoto').onclick=()=>$('#fileC').click();$('#nVid').onclick=()=>$('#fileV').click();
 function st(id,t,ok){const e=$(id);e.textContent=t;e.style.color=ok?'#34c759':'var(--acc)'}
 async function ask(k){try{const s=await navigator.mediaDevices.getUserMedia(k==='cam'?{video:true}:{audio:true});s.getTracks().forEach(t=>t.stop());st('#s'+k,'Permitido',true);if(k==='cam')startCam()}catch(e){st('#s'+k,'Bloqueado',false)}}
 $('#pCam').onclick=()=>ask('cam');$('#pMic').onclick=()=>ask('mic');
 $('#shutter').onclick=()=>{
  if(!dims()||src===demo){showPerm(true);return}
- if(mode==='photo'){const f=$('#flash');f.style.opacity=.8;setTimeout(()=>f.style.opacity=0,120);out.toBlob(b=>showPrev(b,'photo'),'image/jpeg',.95)}
+ if(mode==='photo'){const f=$('#flash');f.style.opacity=.8;setTimeout(()=>f.style.opacity=0,120);{const u=out.toDataURL('image/jpeg',jq),bin=atob(u.split(',')[1]),a=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)a[i]=bin.charCodeAt(i);showPrev(new Blob([a],{type:'image/jpeg'}),'photo')}}
  else if(!rec)startRec();else rec.stop();
 };
 function startRec(){
@@ -312,28 +346,39 @@ function startRec(){
  if(fileVid){try{if(!actx){actx=new (window.AudioContext||window.webkitAudioContext)();adest=actx.createMediaStreamDestination();actx.createMediaElementSource(vid).connect(adest)}actx.resume();adest.stream.getAudioTracks().forEach(t=>s.addTrack(t));vid.muted=false;vid.loop=false;vid.currentTime=0;vid.play();vid.onended=()=>{if(rec)rec.stop()}}catch(e){}}
  else if(stream&&src===vid)stream.getAudioTracks().forEach(t=>s.addTrack(t));
  const mt=['video/mp4;codecs=avc1','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].find(m=>MediaRecorder.isTypeSupported(m));
- chunks=[];rec=new MediaRecorder(s,mt?{mimeType:mt,videoBitsPerSecond:5e6}:{});
+ chunks=[];rec=new MediaRecorder(s,mt?{mimeType:mt,videoBitsPerSecond:vbr*(maxDim>2000?2.5:maxDim>1300?1.5:1)}:{});
  rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};
- rec.onstop=()=>{const r=rec;rec=null;$('#shutter').classList.remove('rec');if(fileVid){vid.muted=true;vid.loop=true;vid.onended=null;vid.play().catch(()=>{})}showPrev(new Blob(chunks,{type:r.mimeType||'video/webm'}),'video')};
+ rec.onstop=()=>{const r=rec;rec=null;$('#shutter').classList.remove('rec');if(fileVid){vid.muted=true;vid.loop=true;vid.onended=null;vid.play().catch(()=>{})}const bl=new Blob(chunks,{type:r.mimeType||'video/webm'});if(bl.size<2000){toast('A gravação saiu vazia. Nada foi salvo.');return}showPrev(bl,'video')};
  rec.start(1000);recT=performance.now();$('#shutter').classList.add('rec');
 }
 function showPrev(b,kind){
- prevBlob={b,kind};const u=URL.createObjectURL(b);const pc=$('#pc');pc.innerHTML='';
+ prevBlob={b,kind,f:new File([b],'vhs-'+Date.now()+'.'+(kind==='photo'?'jpg':(b.type.includes('mp4')?'mp4':'webm')),{type:b.type})};const u=URL.createObjectURL(b);const pc=$('#pc');pc.innerHTML='';
  const el=document.createElement(kind==='photo'?'img':'video');el.src=u;if(kind==='video'){el.controls=true;el.playsInline=true;el.loop=true;el.autoplay=true}
- pc.appendChild(el);$('#hint').textContent='';$('#prev').style.display='flex';
+ pc.appendChild(el);$('#share').textContent='Salvar no Fotos';$('#hint').textContent='Toque em “Salvar no Fotos” e escolha “Salvar imagem” ou “Salvar vídeo”.';$('#prev').style.display='flex';if(autoSave)tryShare(true);
 }
 $('#close').onclick=()=>{$('#prev').style.display='none';$('#pc').innerHTML=''};
-$('#share').onclick=async()=>{
- if(!prevBlob)return;const ext=prevBlob.kind==='photo'?'jpg':(prevBlob.b.type.includes('mp4')?'mp4':'webm');
- const f=new File([prevBlob.b],'vhs-'+Date.now()+'.'+ext,{type:prevBlob.b.type});
- try{if(navigator.canShare&&navigator.canShare({files:[f]}))await navigator.share({files:[f]});else $('#hint').textContent='Seu navegador não abriu o compartilhamento. Segure o dedo sobre a imagem/vídeo para salvar.'}catch(e){}
-};
+$('#share').onclick=()=>tryShare(false);
+async function tryShare(auto){
+ if(!prevBlob)return;const f=prevBlob.f,hint=t=>{$('#hint').textContent=t};
+ if(!(navigator.canShare&&navigator.canShare({files:[f]}))){hint('Este navegador não abre o menu de salvar. Segure o dedo sobre a foto ou o vídeo e escolha Salvar.');return}
+ try{await navigator.share({files:[f]});prevBlob.shared=true;$('#share').textContent='Compartilhar novamente';hint('Menu aberto. Escolha “Salvar imagem” ou “Salvar vídeo” para guardar no app Fotos.')}
+ catch(e){hint(e.name==='AbortError'?'Cancelado. Toque em “Salvar no Fotos” quando quiser.':(auto?'O iOS exige um toque para salvar. Toque em “Salvar no Fotos”.':'Não foi possível abrir o menu de salvar.'))}
+}
+function checkRes(){const t=stream&&stream.getVideoTracks()[0];if(!t||!t.getSettings)return;const st=t.getSettings(),got=Math.max(st.width||0,st.height||0);if(!got)return;
+ if(got<maxDim*.95){const bs=[...document.querySelectorAll('[data-k=res] button')],opts=bs.map(b=>+b.dataset.v).filter(v=>v<=got*1.05),best=opts.length?Math.max(...opts):got;
+  toast((maxDim>=3840?'4K':maxDim+'px')+' indisponível aqui. Usando '+st.width+'×'+st.height);maxDim=best;bs.forEach(b=>b.classList.toggle('on',+b.dataset.v===best))}}
 let temp=0,tpx=.5,tpy=.5,ti=0,tdown=false,FR=[1,1,1,1];
 function tset(e){const r=out.getBoundingClientRect(),[w,h,ow,oh]=FR,x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;tpx=((w-ow)/2+x*ow)/w;tpy=1-((h-oh)/2+y*oh)/h}
 out.addEventListener('pointerdown',e=>{e.preventDefault();tdown=true;tset(e);try{out.setPointerCapture(e.pointerId)}catch(_){}});
 out.addEventListener('pointermove',e=>{if(tdown)tset(e)});
 ['pointerup','pointercancel'].forEach(v=>out.addEventListener(v,()=>{tdown=false}));
 setTimeout(()=>toast('Toque e segure na imagem: glitch'),1500);
+let maxDim=1280,jq=.95,vbr=8e6,autoSave=true;
+function showSet(on){$('#sett').style.display=on?'flex':'none'}
+$('#acc').onclick=()=>showSet(true);$('#sClose').onclick=()=>showSet(false);$('#sPerm').onclick=()=>{showSet(false);showPerm(true)};
+document.querySelectorAll('.seg').forEach(sg=>sg.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;[...sg.children].forEach(x=>x.classList.toggle('on',x===b));const k=sg.dataset.k,v=b.dataset.v;
+ if(k==='res'){maxDim=+v;if(src===vid&&!fileVid&&!rec)startCam()}else if(k==='q'){jq=v==='h'?.95:.82;vbr=v==='h'?8e6:4e6}else if(k==='osd')osd=v==='1';else if(k==='auto')autoSave=v==='1'}));
+const shb=$('#shutter');shb.addEventListener('pointerdown',()=>shb.classList.add('down'));['pointerup','pointercancel','pointerleave'].forEach(v=>shb.addEventListener(v,()=>shb.classList.remove('down')));
 const tr=$('#tr'),tv=$('#tv');
 function setT(){const v=+tr.value;temp=v/100;tv.textContent=v===0?'NEUTRO':(v>0?'QUENTE +':'FRIO ')+v}
 tr.addEventListener('input',setT);tv.onclick=()=>{tr.value=0;setT()};
