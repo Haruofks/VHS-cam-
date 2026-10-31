@@ -155,7 +155,7 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px -a
 @media (prefers-reduced-motion:reduce){#about *,#about *:before,#about *:after{animation:none!important;transition:none!important}#cred{opacity:1;transform:none}}
 #mode button{width:52px}#mi{width:52px}#mode.v #mi{transform:translateX(52px)}#mode.b #mi{transform:translateX(104px)}#mode #mBoom{font-size:7px}
 .cas::after{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='90' height='90'><filter id='n'><feTurbulence baseFrequency='.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");opacity:.3;mix-blend-mode:overlay;pointer-events:none}
-#bm{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#000;z-index:5}#bm video{max-width:100%;max-height:100%}
+#bm{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:#000;z-index:5}#bm canvas{max-width:100%;max-height:100%;object-fit:contain}#bmi{position:absolute;top:12px;left:0;right:0;text-align:center;font:700 11px 'Courier New',monospace;color:#fff;text-shadow:0 0 4px #000;display:none}.btn:disabled{opacity:.4}
 #bm .bmb{position:absolute;bottom:16px;left:0;right:0;display:flex;gap:12px;justify-content:center}#bm .btn{padding:12px 24px;font-weight:600}
 #ep{position:absolute;left:12px;right:12px;bottom:12px;display:none;flex-direction:column;gap:6px;background:rgba(12,12,14,.92);border-radius:18px;padding:12px;z-index:4;box-shadow:0 0 0 1px #2a2a2e}
 #ep .er{display:flex;justify-content:space-between;align-items:center;font:700 11px 'Courier New',monospace;color:#9a9aa3}#ep b{color:#fff}#ep small{font-size:10px;max-width:60%;line-height:1.3}
@@ -163,6 +163,9 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px -a
 #er::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:linear-gradient(90deg,#2a2a2e,#d9d9d9)}
 #er::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;margin-top:-8px;box-shadow:0 0 0 3px rgba(0,0,0,.5)}
 #adj #eb{flex:none}
+#bot{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
+#bot .lg{justify-self:start}#bot #mode{justify-self:end}#bot #shutter{justify-self:center}
+#mode button{width:42px}#mi{width:42px}#mode.v #mi{transform:translateX(42px)}#mode.b #mi{transform:translateX(84px)}#mode #mBoom{font-size:6.5px;letter-spacing:-.2px}
 </style>
 </head>
 <body>
@@ -173,12 +176,13 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px -a
   <button class="round" id="bAr">9:16</button>
   <button class="round" id="bFlip" aria-label="Virar"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14-4M4 4v4h4M4 13a8 8 0 0 0 14 4m2 3v-4h-4"/></svg></button>
   <canvas id="recui" width="460" height="60" style="position:absolute;top:20px;left:50%;transform:translateX(-50%);width:230px;height:30px;display:none;z-index:2;pointer-events:none;filter:drop-shadow(0 0 3px #000)"></canvas><div id="zbar"><span>W</span><i><b></b></i><span>T</span></div><div id="toast"></div><div id="ban">Prévia de demonstração: a câmera está bloqueada neste ambiente. Toque aqui para ver as opções.</div>
-  <div id="bm"><video id="bmv" loop muted playsinline></video><div class="bmb"><button class="btn" id="bmS">Salvar</button><button class="btn" id="bmC">Fechar</button></div></div>
+  <div id="bm"><canvas id="bmc"></canvas><div id="bmi"></div><div class="bmb"><button class="btn" id="bmS" disabled>Salvar</button><button class="btn" id="bmR" style="display:none">Tentar de novo</button><button class="btn" id="bmC">Fechar</button></div></div>
   <div id="ep"><div class="er"><span>EXPOSIÇÃO</span><b id="ev">0.0 EV</b></div><input type="range" id="er" min="-20" max="20" value="0" aria-label="Exposição"><div class="er"><small id="en"></small><button class="btn" id="e0">Redefinir</button></div></div>
   <div id="sett"><b>Configurações</b>
    <div class="opt"><span>Resolução</span><div class="seg" data-k="res"><button data-v="1280">720p</button><button data-v="1920" class="on">1080p</button><button data-v="3840">4K</button></div></div>
    <div class="opt"><span>Qualidade</span><div class="seg" data-k="q"><button data-v="n">Normal</button><button data-v="h" class="on">Alta</button></div></div>
    <div class="opt"><span>Data e hora</span><div class="seg" data-k="osd"><button data-v="1" class="on">Ligada</button><button data-v="0">Desligada</button></div></div>
+   <div class="opt"><span>Exposição automática</span><div class="seg" data-k="aex"><button data-v="1" class="on">Ligada</button><button data-v="0">Desligada</button></div></div>
    <div class="opt"><span>Salvar no Fotos</span><div class="seg" data-k="auto"><button data-v="1" class="on">Automático</button><button data-v="0">Manual</button></div></div>
    <button class="btn" id="sAbout">Sobre o VHS-cam · Como usar</button>
    <button class="btn" id="sPerm">Acesso à câmera e microfone</button>
@@ -348,10 +352,11 @@ function frame(t){
  let ow,oh;if(r<w/h){oh=h;ow=Math.round(h*r)}else{ow=w;oh=Math.round(w/r)}
  const key=w+'x'+h+'x'+ai;
  if(key!==sizeKey){sizeKey=key;gc.width=w;gc.height=h;out.width=ow;out.height=oh;g.viewport(0,0,w,h)}
+ autoExp(t);
  drawStamp(w,h,ow,oh);
  g.texImage2D(g.TEXTURE_2D,0,g.RGBA,g.RGBA,g.UNSIGNED_BYTE,src);
  const p=cur;g.uniform2f(U.res,w,h);g.uniform1f(U.time,t/1000);g.uniform1f(U.mirror,mirror);g.uniform1f(U.zoom,zoom);
- KS.forEach(k=>g.uniform1f(U[k],p[k]));g.uniform3f(U.tint,...p.tint);g.uniform3f(U.lc,...p.lc);g.uniform2f(U.tp,tpx,tpy);g.uniform1f(U.ti,ti);g.uniform1f(U.temp,temp);g.uniform1f(U.ex,exSw);FR=[w,h,ow,oh];g.drawArrays(g.TRIANGLE_STRIP,0,4);
+ KS.forEach(k=>g.uniform1f(U[k],p[k]));g.uniform3f(U.tint,...p.tint);g.uniform3f(U.lc,...p.lc);g.uniform2f(U.tp,tpx,tpy);g.uniform1f(U.ti,ti);g.uniform1f(U.temp,temp);g.uniform1f(U.ex,exSw+exA);FR=[w,h,ow,oh];g.drawArrays(g.TRIANGLE_STRIP,0,4);
  ctx.drawImage(gc,(w-ow)/2,(h-oh)/2,ow,oh,0,0,ow,oh);
  drawRecUI(t);
 }
@@ -462,7 +467,7 @@ let maxDim=1920,jq=.95,vbr=8e6,autoSave=true;
 function showSet(on){$('#sett').style.display=on?'flex':'none'}
 $('#acc').onclick=()=>showSet(true);$('#sClose').onclick=()=>showSet(false);$('#sPerm').onclick=()=>{showSet(false);showPerm(true)};
 document.querySelectorAll('.seg').forEach(sg=>sg.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;[...sg.children].forEach(x=>x.classList.toggle('on',x===b));const k=sg.dataset.k,v=b.dataset.v;
- if(k==='res'){maxDim=+v;if(src===vid&&!fileVid&&!rec)startCam()}else if(k==='q'){jq=v==='h'?.95:.82;vbr=v==='h'?8e6:4e6}else if(k==='osd')osd=v==='1';else if(k==='auto')autoSave=v==='1'}));
+ if(k==='res'){maxDim=+v;if(src===vid&&!fileVid&&!rec)startCam()}else if(k==='q'){jq=v==='h'?.95:.82;vbr=v==='h'?8e6:4e6}else if(k==='osd')osd=v==='1';else if(k==='auto')autoSave=v==='1';else if(k==='aex'){aex=v==='1';exInit()}}));
 const shb=$('#shutter');shb.addEventListener('pointerdown',()=>shb.classList.add('down'));['pointerup','pointercancel','pointerleave'].forEach(v=>shb.addEventListener(v,()=>shb.classList.remove('down')));
 const ab=$('#about'),RM=matchMedia('(prefers-reduced-motion: reduce)');let abI=null,abS=0;
 function abOpen(){showSet(false);ab.classList.add('open');ab.scrollTop=0;if(!RM.matches){abS=0;clearInterval(abI);abI=setInterval(()=>{abS=(abS+1)%60;$('#abc').textContent='00:'+pad(abS)},1000)}}
@@ -473,32 +478,44 @@ new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){e.target.cl
 const hl=document.createElement('label');hl.style.cssText='position:fixed;left:-99px;top:-99px;opacity:0;pointer-events:none';hl.innerHTML='<input type="checkbox" switch>';document.body.appendChild(hl);
 function triggerHaptic(t){const p={light:8,tick:5,medium:18}[t]||8;if(navigator.vibrate){navigator.vibrate(p);return}try{hl.click()}catch(e){}}
 document.addEventListener('pointerdown',e=>{const b=e.target.closest&&e.target.closest('button');if(b)triggerHaptic(b.id==='shutter'?'medium':'light')},{passive:true});
+const mc=document.createElement('canvas');mc.width=32;mc.height=24;const mx=mc.getContext('2d',{willReadFrequently:true});let exA=0,exT=0,mT=0,aex=true,hwAuto=false,aLast=0;
+function autoExp(t){
+ const dt=Math.min(.1,Math.max(0,(t-aLast)/1000));aLast=t;
+ if(!aex||hwAuto)exT=0;
+ else if(t-mT>250&&src&&src!==demo){mT=t;try{mx.drawImage(src,0,0,32,24);const d=mx.getImageData(0,0,32,24).data;let sum=0,cl=0;for(let i=0;i<d.length;i+=4){const y=(.299*d[i]+.587*d[i+1]+.114*d[i+2])/255;sum+=y;if(y>.95)cl++}const n=d.length/4,m=sum/n;let tg=Math.log2(.42/Math.max(.03,m))*.7-(cl/n)*1.2;tg=Math.max(-1,Math.min(1.5,tg));exT=Math.abs(tg)<.15?0:tg}catch(e){}}
+ exA+=(exT-exA)*Math.min(1,dt/1.2);
+}
 const ep=$('#ep'),er=$('#er'),evl=$('#ev'),enote=$('#en');
 function setEx(){const v=er.value/10;evl.textContent=(v>0?'+':'')+v.toFixed(1)+' EV';if(exHw){exSw=0;const t=stream&&stream.getVideoTracks()[0];t&&t.applyConstraints({advanced:[{exposureCompensation:v}]}).catch(()=>{})}else exSw=v}
-function exInit(){const t=stream&&stream.getVideoTracks()[0],c=t&&t.getCapabilities&&t.getCapabilities();if(c&&c.exposureCompensation){exHw=true;er.min=Math.round(c.exposureCompensation.min*10);er.max=Math.round(c.exposureCompensation.max*10);enote.textContent='Exposição real da câmera'}else{exHw=false;er.min=-20;er.max=20;enote.textContent='Ajuste de luminosidade no processamento da imagem: o navegador não permite exposição real do sensor.'}setEx()}
+function exInit(){const t=stream&&stream.getVideoTracks()[0],c=t&&t.getCapabilities&&t.getCapabilities();hwAuto=!!(c&&c.exposureMode&&c.exposureMode.includes&&c.exposureMode.includes('continuous'));if(hwAuto&&t.applyConstraints)t.applyConstraints({advanced:[{exposureMode:aex?'continuous':'manual'}]}).catch(()=>{});if(c&&c.exposureCompensation){exHw=true;er.min=Math.round(c.exposureCompensation.min*10);er.max=Math.round(c.exposureCompensation.max*10);enote.textContent='Exposição real da câmera'}else{exHw=false;er.min=-20;er.max=20;enote.textContent='Ajuste de luminosidade no processamento da imagem: o navegador não permite exposição real do sensor.'}enote.textContent+=aex?' Automática ligada: este controle compensa o ajuste automático.':' Automática desligada: ajuste manual.';setEx()}
 $('#eb').onclick=()=>{ep.style.display=ep.style.display==='flex'?'none':'flex'};er.addEventListener('input',setEx);$('#e0').onclick=()=>{er.value=0;setEx()};setEx();
-let boomBusy=false,bFrames=[],bUrl=null,bBlob=null;
+let boomBusy=false,bFrames=[],bUrl=null,bBlob=null,bTimer=null,bIdx=0,bSeq=[],bMr=null,bCh=[],bReady=false;
 $('#mBoom').onclick=()=>{if(rec||boomBusy)toast('Aguarde a captura terminar para trocar de modo');else setMode('boom')};
-function boomClean(){bFrames.forEach(f=>f.close&&f.close());bFrames=[];if(bUrl)URL.revokeObjectURL(bUrl);bUrl=bBlob=null;const v=$('#bmv');v.pause();v.removeAttribute('src');v.load();$('#bm').style.display='none'}
+function boomClean(){clearInterval(bTimer);try{if(bMr&&bMr.state==='recording'){bMr.onstop=null;bMr.stop()}}catch(e){}bMr=null;bFrames.forEach(f=>f.close&&f.close());bFrames=[];bUrl=bBlob=null;bReady=false;$('#bm').style.display='none';$('#bmR').style.display='none';$('#bmi').style.display='none'}
 async function startBoom(){
  if(boomBusy)return;if(!dims()||src===demo){showPerm(true);return}
  if(!window.MediaRecorder){toast('Gravação não suportada aqui');return}
  boomBusy=true;$('#shutter').classList.add('rec');toast('Gravando Boomerang (4 s)…');const ps=[];
  const iv=setInterval(()=>{const k=Math.min(1,720/Math.max(out.width,out.height));ps.push(createImageBitmap(out,{resizeWidth:Math.round(out.width*k),resizeHeight:Math.round(out.height*k)}))},83);
  await new Promise(r=>setTimeout(r,4000));clearInterval(iv);$('#shutter').classList.remove('rec');toast('Criando Boomerang…');
- try{bFrames=await Promise.all(ps);await buildBoom()}catch(e){toast('Não foi possível criar o Boomerang');boomClean()}
+ try{bFrames=await Promise.all(ps);if(bFrames.length<8)throw 0;$('#bm').style.display='flex';boomPlay()}catch(e){boomClean();toast('Não foi possível criar o Boomerang. Toque no botão para tentar de novo.')}
  boomBusy=false;
 }
-async function buildBoom(){
- const n=bFrames.length;if(n<8)throw 0;const w=bFrames[0].width,h=bFrames[0].height,c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');
- const ix=[...bFrames.keys()],seq=[...ix,...ix.slice(1,-1).reverse()],mt=['video/mp4;codecs=avc1','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(m=>MediaRecorder.isTypeSupported(m));
- const mr=new MediaRecorder(c.captureStream(12),mt?{mimeType:mt,videoBitsPerSecond:5e6}:{}),ch=[];mr.ondataavailable=e=>{if(e.data.size)ch.push(e.data)};
- const done=new Promise(r=>mr.onstop=r);mr.start(500);
- for(const i of seq){x.drawImage(bFrames[i],0,0);await new Promise(r=>setTimeout(r,83))}
- mr.stop();await done;bBlob=new Blob(ch,{type:mr.mimeType||'video/mp4'});if(bBlob.size<2000)throw 0;
- bUrl=URL.createObjectURL(bBlob);const v=$('#bmv');v.src=bUrl;$('#bm').style.display='flex';v.play().catch(()=>{});
+function boomPlay(){
+ const cv=$('#bmc'),x=cv.getContext('2d'),bi=$('#bmi'),ix=[...bFrames.keys()];
+ cv.width=bFrames[0].width;cv.height=bFrames[0].height;bSeq=[...ix,...ix.slice(1,-1).reverse()];bIdx=0;bReady=false;bBlob=null;bCh=[];
+ $('#bmS').disabled=true;$('#bmR').style.display='none';bi.textContent='Preparando arquivo…';bi.style.display='block';
+ x.drawImage(bFrames[0],0,0);let enc=false;
+ try{if(window.MediaRecorder){const mt=['video/mp4;codecs=avc1','video/webm;codecs=vp9','video/webm;codecs=vp8','video/webm'].find(m=>MediaRecorder.isTypeSupported(m));
+  bMr=new MediaRecorder(cv.captureStream(12),mt?{mimeType:mt,videoBitsPerSecond:5e6}:{});
+  bMr.ondataavailable=e=>{if(e.data.size)bCh.push(e.data)};
+  bMr.onstop=()=>{const b=new Blob(bCh,{type:(bMr&&bMr.mimeType)||'video/mp4'});if(b.size>2000){bBlob=b;bReady=true;$('#bmS').disabled=false;bi.style.display='none'}else{bi.textContent='Não foi possível preparar o arquivo.';$('#bmR').style.display='inline-block'}};
+  bMr.start(500);enc=true}}catch(e){enc=false}
+ if(!enc){bi.textContent='Só pré-visualização: o navegador não grava este vídeo.'}
+ clearInterval(bTimer);
+ bTimer=setInterval(()=>{x.drawImage(bFrames[bSeq[bIdx]],0,0);bIdx++;if(bIdx>=bSeq.length){bIdx=0;if(bMr&&bMr.state==='recording')setTimeout(()=>{try{bMr.stop()}catch(e){}},100)}},83);
 }
-$('#bmC').onclick=boomClean;
+$('#bmC').onclick=boomClean;$('#bmR').onclick=()=>{if(bFrames.length)boomPlay()};
 $('#bmS').onclick=async()=>{if(!bBlob)return;const f=new File([bBlob],'vhs-boomerang-'+Date.now()+'.'+(bBlob.type.includes('mp4')?'mp4':'webm'),{type:bBlob.type});
  if(!(navigator.canShare&&navigator.canShare({files:[f]}))){toast('Segure o dedo sobre o vídeo e escolha Salvar');return}
  try{await navigator.share({files:[f]});toast('Menu de salvar aberto: escolha “Salvar vídeo”')}catch(e){if(e.name!=='AbortError')toast('Não foi possível abrir o menu de salvar')}};
