@@ -166,6 +166,22 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px -a
 #bot{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
 #bot .lg{justify-self:start}#bot #mode{justify-self:end}#bot #shutter{justify-self:center}
 #mode button{width:42px}#mi{width:42px}#mode.v #mi{transform:translateX(42px)}#mode.b #mi{transform:translateX(84px)}#mode #mBoom{font-size:6.5px;letter-spacing:-.2px}
+#fg{position:absolute;inset:0;pointer-events:none;z-index:3;border-radius:inherit}
+#fp{position:absolute;left:12px;right:12px;bottom:12px;display:none;flex-direction:column;gap:8px;background:rgba(12,12,14,.92);border-radius:18px;padding:12px;z-index:4;box-shadow:0 0 0 1px #2a2a2e}
+#fp .er{display:flex;justify-content:space-between;font:700 11px 'Courier New',monospace;color:#9a9aa3}#fp b{color:#fff}#fp small{font-size:10px;color:#9a9aa3;line-height:1.35}
+#fi{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;margin:0}#fi:disabled{opacity:.4}
+#fi::-webkit-slider-runnable-track{height:6px;border-radius:3px;background:linear-gradient(90deg,#2a2a2e,#fff)}
+#fi::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:#fff;margin-top:-8px;box-shadow:0 0 0 3px rgba(0,0,0,.5)}
+#bFlash.on{background:rgba(255,106,69,.75)}
+.bo{position:absolute;top:40px;width:18px;height:18px;border-radius:50%;background:#ff6a45;animation:abo 1.4s ease-in-out infinite alternate}@keyframes abo{from{left:10%}to{left:80%}}
+.ex{animation:aex 5s ease-in-out infinite}@keyframes aex{0%,100%{filter:brightness(1)}30%{filter:brightness(.35)}65%{filter:brightness(1.7)}}
+.f2{animation:af2 3s infinite}@keyframes af2{0%,100%{opacity:0}40%,60%{opacity:.7}}
+.fp1{animation:afl2 3s ease-in-out infinite}@keyframes afl2{0%,40%{transform:none}50%,90%{transform:scaleX(-1)}}
+.rot{position:absolute;left:50%;top:50%;width:34px;height:34px;margin:-17px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;animation:arr 3s ease-in-out infinite}@keyframes arr{0%,40%{transform:rotate(0)}50%,100%{transform:rotate(180deg)}}
+.ar{position:absolute;left:50%;top:50%;border:2px solid #fff;border-radius:4px;transform:translate(-50%,-50%);animation:aar 6s steps(1) infinite}@keyframes aar{0%{width:38px;height:68px}33%{width:60px;height:60px}66%{width:92px;height:52px}}
+.ds{position:absolute;right:8px;bottom:6px;text-align:right;font:700 12px 'Courier New',monospace;color:#fff7e6;text-shadow:1px 1px 0 #000;display:flex;flex-direction:column;animation:ads 4s infinite}#about em{font-style:normal;animation:abk 1s steps(2) infinite}@keyframes ads{0%,70%{opacity:1}80%,95%{opacity:0}100%{opacity:1}}
+.shs{position:absolute;left:12%;right:12%;bottom:0;height:46px;background:#2a2a2e;border-radius:12px 12px 0 0;transform:translateY(100%);animation:ash2 3.2s infinite;color:#fff;font:700 11px 'Courier New',monospace;display:grid;place-items:center}@keyframes ash2{0%,15%{transform:translateY(100%)}30%,80%{transform:none}95%,100%{transform:translateY(100%)}}
+.pl{position:absolute;left:50%;top:50%;width:20px;height:20px;margin:-10px;border-radius:50%;border:2px solid #ff6a45;animation:apl 1.6s infinite}.pl:nth-child(2){animation-delay:.5s}@keyframes apl{0%{transform:scale(1);opacity:.9}100%{transform:scale(4);opacity:0}}
 </style>
 </head>
 <body>
@@ -176,6 +192,8 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px -a
   <button class="round" id="bAr">9:16</button>
   <button class="round" id="bFlip" aria-label="Virar"><svg viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14-4M4 4v4h4M4 13a8 8 0 0 0 14 4m2 3v-4h-4"/></svg></button>
   <canvas id="recui" width="460" height="60" style="position:absolute;top:20px;left:50%;transform:translateX(-50%);width:230px;height:30px;display:none;z-index:2;pointer-events:none;filter:drop-shadow(0 0 3px #000)"></canvas><div id="zbar"><span>W</span><i><b></b></i><span>T</span></div><div id="toast"></div><div id="ban">Prévia de demonstração: a câmera está bloqueada neste ambiente. Toque aqui para ver as opções.</div>
+  <div id="fg"></div>
+  <div id="fp"><div class="er"><span>FLASH</span><b id="fv">60%</b></div><div class="seg" id="fseg"><button data-v="0" class="on">Desligado</button><button data-v="1">Ligado</button></div><input type="range" id="fi" min="10" max="100" value="60" aria-label="Intensidade do flash"><small id="fnote"></small></div>
   <div id="bm"><canvas id="bmc"></canvas><div id="bmi"></div><div class="bmb"><button class="btn" id="bmS" disabled>Salvar</button><button class="btn" id="bmR" style="display:none">Tentar de novo</button><button class="btn" id="bmC">Fechar</button></div></div>
   <div id="ep"><div class="er"><span>EXPOSIÇÃO</span><b id="ev">0.0 EV</b></div><input type="range" id="er" min="-20" max="20" value="0" aria-label="Exposição"><div class="er"><small id="en"></small><button class="btn" id="e0">Redefinir</button></div></div>
   <div id="sett"><b>Configurações</b>
@@ -215,7 +233,7 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px -a
 <div id="about"><button class="abk" id="abBack">← Configurações</button>
  <h1>Como usar o VHS-cam</h1>
  <p class="ai">Uma filmadora VHS no seu celular: escolha um filtro, ajuste a cor e grave com o visual das fitas dos anos 80 e 90.</p>
- <div class="card"><div class="il"><div class="sc fl"></div><b class="gn g1"></b><div class="lb"><span>ORIGINAL</span><span>T-120</span><span>E240</span><span>NIGHT VISION</span></div></div><h2>FILTROS VHS</h2><p>Cada filtro imita uma filmadora ou fita diferente, com cores, borrão, grão e falhas próprios.</p></div>
+ <div class="card"><div class="il"><div class="sc fl"></div><b class="gn g1"></b><div class="lb"><span>ORIGINAL</span><span>T-120</span><span>E240</span><span>NIGHT VISION</span></div></div><h2>FILTROS VHS</h2><p>Cada filtro imita uma filmadora ou fita diferente, com cores, borrão, grão e falhas próprios. São 8: T-120, E240, Hi-Fi, L-750, TC-30, S-VHS, Night Vision e B&amp;W VHS.</p></div>
  <div class="card"><div class="il tap"><div class="sc gl"></div><u class="st s1"></u><u class="st s2"></u><span class=hintt>TOQUE</span></div><h2>EFEITO GLITCH</h2><p>Toque e segure na imagem da câmera para criar distorções de fita VHS antiga. Elas entram na foto e no vídeo.</p></div>
  <div class="card"><div class="il"><div class="sc zm"></div><div class="zi"><span class="z1">1.0x</span><span class="z2">2.0x</span></div><div class="mbs"><i class="mw">W</i><i class="mt">T</i></div></div><h2>ZOOM W E T</h2><p>W diminui o zoom e T aproxima. Toque curto dá um passo pequeno; segurar dá zoom contínuo. O zoom é digital, de 1.0x a 8.0x.</p></div>
  <div class="card"><div class="il"><div class="sc"></div><div class="fls"></div><i class="shm"></i><i class="thm"></i></div><h2>MODO FOTO</h2><p>No modo FOTO, o botão central registra uma imagem com o filtro e os ajustes escolhidos.</p></div>
@@ -223,6 +241,16 @@ html,body{height:100%;margin:0;background:var(--bg);color:var(--fg);font:14px -a
  <div class="card"><div class="il"><div class="sc"></div><div class="tw"></div><div class="rl"><i class="rt"></i></div></div><h2>BALANÇO DE TEMPERATURA</h2><p>O controle FRIO ↔ QUENTE muda a temperatura de cor. Toque no valor para voltar ao neutro.</p></div>
  <div class="card"><div class="il tap"><div class="sc"></div><b class="gn g2"></b><span class=hintt>TOQUE</span></div><h2>GRÃO VHS</h2><p>O grão cria a textura de ruído de fitas antigas e está presente em todos os filtros.</p></div>
  <div class="card"><div class="il"><div class="chs"><i style="animation-delay:0s">720p</i><i style="animation-delay:2s">1080p</i><i style="animation-delay:4s">4K*</i></div><div class="cn">*se houver suporte</div></div><h2>QUALIDADE</h2><p>Em Configurações, escolha 720p, 1080p ou 4K. O 4K só vale se o aparelho e o navegador entregarem; senão o app avisa e usa a melhor opção.</p></div>
+ <div class="card"><div class="il"><div class="sc"></div><i class="bo"></i><div class="rc">4 s</div></div><h2>BOOMERANG</h2><p>No modo BOOMERANG, o app grava 4 segundos e cria um vídeo de ida e volta, com o filtro aplicado. Revise e toque em Salvar ou Fechar.</p></div>
+ <div class="card"><div class="il"><div class="sc ex"></div><div class="rc">AUTO</div></div><h2>EXPOSIÇÃO</h2><p>A exposição automática clareia ambientes escuros e reduz áreas estouradas. O botão de sol compensa o ajuste automático ou, com a automática desligada, controla tudo.</p></div>
+ <div class="card"><div class="il"><div class="sc"></div><div class="fls f2"></div><div class="rl"><i class="rt"></i></div></div><h2>FLASH</h2><p>O botão de raio abre o painel do flash. Se o aparelho liberar a lanterna, ela liga e desliga; senão, o app usa uma luz de tela com intensidade ajustável.</p></div>
+ <div class="card"><div class="il"><div class="sc fp1"></div><svg class="rot" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14-4M4 4v4h4M4 13a8 8 0 0 0 14 4m2 3v-4h-4"/></svg></div><h2>TROCAR CÂMERA</h2><p>O botão de setas alterna entre a câmera traseira e a frontal, quando o aparelho tiver as duas.</p></div>
+ <div class="card"><div class="il"><div class="ar"></div></div><h2>PROPORÇÃO</h2><p>O botão 9:16 muda o enquadramento da imagem: 9:16, 3:4, 1:1 e 16:9.</p></div>
+ <div class="card"><div class="il"><div class="sc"></div><div class="ds"><span>12<em>:</em>00</span><span>31. 10. 2026</span></div></div><h2>DATA E HORA</h2><p>A data e a hora ficam gravadas na imagem, como numa filmadora antiga. Dá para desligar em Configurações.</p></div>
+ <div class="card"><div class="il"><div class="sc"></div><i class="thm"></i></div><h2>ÁLBUM</h2><p>O botão de álbum aplica o filtro em uma foto ou vídeo que você já tem. Se a câmera estiver bloqueada, a engrenagem tem o painel de acesso e a câmera do iPhone.</p></div>
+ <div class="card"><div class="il"><div class="sc"></div><div class="shs">Salvar vídeo</div></div><h2>SALVAR NO FOTOS</h2><p>Depois de capturar, o iOS abre o menu de compartilhar: escolha Salvar imagem ou Salvar vídeo. O Safari não permite salvar sozinho no Fotos.</p></div>
+ <div class="card"><div class="il"><div class="chs"><i style="animation-delay:0s">RESOLUÇÃO</i><i style="animation-delay:2s">QUALIDADE</i><i style="animation-delay:4s">DATA</i></div></div><h2>CONFIGURAÇÕES</h2><p>Na engrenagem você escolhe resolução (720p, 1080p ou 4K se houver suporte), qualidade, data e hora, exposição automática e como salvar.</p></div>
+ <div class="card"><div class="il"><i class="pl"></i><i class="pl"></i></div><h2>VIBRAÇÃO</h2><p>Botões e o controle de temperatura dão pequenos toques de vibração, quando o iPhone e o navegador permitem.</p></div>
  <div id="cred"><svg width="64" height="40" viewBox="0 0 64 40"><rect x="1" y="1" width="62" height="38" rx="5" fill="none" stroke="#ff6a45" stroke-width="2"/><rect x="10" y="6" width="44" height="14" rx="2" fill="none" stroke="#ff6a45" stroke-opacity=".6"/><circle cx="22" cy="28" r="5" fill="none" stroke="#ff6a45"/><circle cx="42" cy="28" r="5" fill="none" stroke="#ff6a45"/><path d="M27 28h10" stroke="#ff6a45"/></svg>
   <p>Criado com paixão por imagem, tecnologia e nostalgia.</p>
   <div>Desenvolvido por <a href="https://www.instagram.com/haruofks/" target="_blank" rel="noopener noreferrer">@haruofks</a></div></div>
@@ -284,7 +312,7 @@ function toast(t){const e=$('#toast');e.textContent=t;e.style.opacity=1;clearTim
 if(!g)msg('Este navegador não suporta WebGL, necessário para o efeito.');
 const VS='attribute vec2 a;varying vec2 uv;void main(){uv=a*.5+.5;gl_Position=vec4(a,0.,1.);}';
 const FS=`precision highp float;varying vec2 uv;uniform sampler2D tex,ov;uniform vec2 res,tp;uniform float time,mirror,zoom,ti,temp,ex,sl,chroma,grain,gs,cnoise,scan,il,jit,wob,wfq,wsp,track,tbh,tbs,tsn,hsh,hsa,drop,ring,xcol,smear,bloom,flick,hot,vig,sat,con,lift,soft,mono,gTear,gSplit,gRoll,gRate,gseed;uniform vec3 tint,lc;
-float h(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float h(vec2 p){vec3 q=fract(vec3(p.xyx)*.1031);q+=dot(q,q.yzx+33.33);return fract((q.x+q.y)*q.z);}
 vec3 S(vec2 q){vec2 z=(q-.5)/zoom+.5;vec3 c=texture2D(tex,vec2(mirror>.5?1.-z.x:z.x,1.-z.y)).rgb;vec4 o=texture2D(ov,vec2(q.x,1.-q.y));return mix(c,o.rgb,o.a);}
 void main(){
  vec2 p=uv;float L=floor((1.-uv.y)*240.),ft=floor(time*30.);
@@ -355,7 +383,7 @@ function frame(t){
  autoExp(t);
  drawStamp(w,h,ow,oh);
  g.texImage2D(g.TEXTURE_2D,0,g.RGBA,g.RGBA,g.UNSIGNED_BYTE,src);
- const p=cur;g.uniform2f(U.res,w,h);g.uniform1f(U.time,t/1000);g.uniform1f(U.mirror,mirror);g.uniform1f(U.zoom,zoom);
+ const p=cur;g.uniform2f(U.res,w,h);g.uniform1f(U.time,(t/1000)%97);g.uniform1f(U.mirror,mirror);g.uniform1f(U.zoom,zoom);
  KS.forEach(k=>g.uniform1f(U[k],p[k]));g.uniform3f(U.tint,...p.tint);g.uniform3f(U.lc,...p.lc);g.uniform2f(U.tp,tpx,tpy);g.uniform1f(U.ti,ti);g.uniform1f(U.temp,temp);g.uniform1f(U.ex,exSw+exA);FR=[w,h,ow,oh];g.drawArrays(g.TRIANGLE_STRIP,0,4);
  ctx.drawImage(gc,(w-ow)/2,(h-oh)/2,ow,oh,0,0,ow,oh);
  drawRecUI(t);
@@ -369,7 +397,7 @@ async function startCam(){
  const v={facingMode:facing,width:{ideal:maxDim},height:{ideal:Math.round(maxDim*.5625)}};
  try{stream=await navigator.mediaDevices.getUserMedia({video:v,audio:true})}
  catch(e){try{stream=await navigator.mediaDevices.getUserMedia({video:v})}catch(e2){ban(true);return}}
- ban(false);msg('');showPerm(false);fileVid=false;vid.loop=false;vid.srcObject=stream;try{await vid.play()}catch(e){}src=vid;checkRes();exInit();mirror=facing==='user'?1:0;sizeKey='';
+ ban(false);msg('');showPerm(false);fileVid=false;vid.loop=false;vid.srcObject=stream;try{await vid.play()}catch(e){}src=vid;checkRes();exInit();flApply();mirror=facing==='user'?1:0;sizeKey='';
 }
 function buildCas(){const c=$('#cas');PRESETS.forEach(p=>{const b=document.createElement('button');b.className='cas'+(p===cur?' on':'');b.style.background='#000';b.style.padding='0';
  b.innerHTML=COVER[p.n];
@@ -380,7 +408,7 @@ $('#mPhoto').onclick=()=>{if(rec||boomBusy)toast('Aguarde a captura terminar par
 
 $('#bFlip').onclick=()=>{facing=facing==='user'?'environment':'user';startCam()};
 $('#bAr').onclick=e=>{ai=(ai+1)%ARS.length;e.currentTarget.textContent=ARS[ai][0]};
-$('#bFlash').onclick=()=>{const tr=stream&&stream.getVideoTracks()[0];if(!(tr&&tr.getCapabilities&&tr.getCapabilities().torch)){toast('Flash indisponível neste navegador');return}fl=!fl;tr.applyConstraints({advanced:[{torch:fl}]}).catch(()=>{});toast(fl?'Flash ligado':'Flash desligado')};
+$('#bFlash').onclick=()=>{fp.style.display=fp.style.display==='flex'?'none':'flex';ep.style.display='none'};
 const GL={
 '0':['01110','10001','10011','10101','11001','10001','01110'],'1':['00100','01100','00100','00100','00100','00100','01110'],
 '2':['01110','10001','00001','00010','00100','01000','11111'],'3':['11110','00001','00001','01110','00001','00001','11110'],
@@ -478,6 +506,13 @@ new IntersectionObserver((es,o)=>es.forEach(e=>{if(e.isIntersecting){e.target.cl
 const hl=document.createElement('label');hl.style.cssText='position:fixed;left:-99px;top:-99px;opacity:0;pointer-events:none';hl.innerHTML='<input type="checkbox" switch>';document.body.appendChild(hl);
 function triggerHaptic(t){const p={light:8,tick:5,medium:18}[t]||8;if(navigator.vibrate){navigator.vibrate(p);return}try{hl.click()}catch(e){}}
 document.addEventListener('pointerdown',e=>{const b=e.target.closest&&e.target.closest('button');if(b)triggerHaptic(b.id==='shutter'?'medium':'light')},{passive:true});
+let flOn=false,flInt=60;const fp=$('#fp'),fi=$('#fi'),fv=$('#fv'),fnote=$('#fnote'),fgl=$('#fg');
+function flApply(){const t=stream&&stream.getVideoTracks()[0],c=t&&t.getCapabilities&&t.getCapabilities();$('#bFlash').classList.toggle('on',flOn);
+ if(c&&c.torch){t.applyConstraints({advanced:[{torch:flOn}]}).catch(()=>{});fgl.style.boxShadow='none';fi.disabled=true;fnote.textContent='Lanterna real: este aparelho só permite ligar e desligar, sem controlar a intensidade.'}
+ else{fi.disabled=false;const k=flInt/100;fgl.style.boxShadow=flOn?'inset 0 0 '+(10+40*k)+'px '+(4+22*k)+'px rgba(255,255,255,'+(.35+.6*k)+')':'none';fnote.textContent='Este navegador não libera a lanterna. Usando luz de tela (borda branca na pré-visualização), útil em selfies. Ela não aparece na foto nem é o flash do aparelho.'}
+ fv.textContent=flInt+'%'}
+$('#fseg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;[...$('#fseg').children].forEach(x=>x.classList.toggle('on',x===b));flOn=b.dataset.v==='1';flApply()});
+fi.addEventListener('input',()=>{flInt=+fi.value;flApply()});
 const mc=document.createElement('canvas');mc.width=32;mc.height=24;const mx=mc.getContext('2d',{willReadFrequently:true});let exA=0,exT=0,mT=0,aex=true,hwAuto=false,aLast=0;
 function autoExp(t){
  const dt=Math.min(.1,Math.max(0,(t-aLast)/1000));aLast=t;
@@ -488,7 +523,7 @@ function autoExp(t){
 const ep=$('#ep'),er=$('#er'),evl=$('#ev'),enote=$('#en');
 function setEx(){const v=er.value/10;evl.textContent=(v>0?'+':'')+v.toFixed(1)+' EV';if(exHw){exSw=0;const t=stream&&stream.getVideoTracks()[0];t&&t.applyConstraints({advanced:[{exposureCompensation:v}]}).catch(()=>{})}else exSw=v}
 function exInit(){const t=stream&&stream.getVideoTracks()[0],c=t&&t.getCapabilities&&t.getCapabilities();hwAuto=!!(c&&c.exposureMode&&c.exposureMode.includes&&c.exposureMode.includes('continuous'));if(hwAuto&&t.applyConstraints)t.applyConstraints({advanced:[{exposureMode:aex?'continuous':'manual'}]}).catch(()=>{});if(c&&c.exposureCompensation){exHw=true;er.min=Math.round(c.exposureCompensation.min*10);er.max=Math.round(c.exposureCompensation.max*10);enote.textContent='Exposição real da câmera'}else{exHw=false;er.min=-20;er.max=20;enote.textContent='Ajuste de luminosidade no processamento da imagem: o navegador não permite exposição real do sensor.'}enote.textContent+=aex?' Automática ligada: este controle compensa o ajuste automático.':' Automática desligada: ajuste manual.';setEx()}
-$('#eb').onclick=()=>{ep.style.display=ep.style.display==='flex'?'none':'flex'};er.addEventListener('input',setEx);$('#e0').onclick=()=>{er.value=0;setEx()};setEx();
+$('#eb').onclick=()=>{ep.style.display=ep.style.display==='flex'?'none':'flex';fp.style.display='none'};er.addEventListener('input',setEx);$('#e0').onclick=()=>{er.value=0;setEx()};setEx();
 let boomBusy=false,bFrames=[],bUrl=null,bBlob=null,bTimer=null,bIdx=0,bSeq=[],bMr=null,bCh=[],bReady=false;
 $('#mBoom').onclick=()=>{if(rec||boomBusy)toast('Aguarde a captura terminar para trocar de modo');else setMode('boom')};
 function boomClean(){clearInterval(bTimer);try{if(bMr&&bMr.state==='recording'){bMr.onstop=null;bMr.stop()}}catch(e){}bMr=null;bFrames.forEach(f=>f.close&&f.close());bFrames=[];bUrl=bBlob=null;bReady=false;$('#bm').style.display='none';$('#bmR').style.display='none';$('#bmi').style.display='none'}
